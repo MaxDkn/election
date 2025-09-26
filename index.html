@@ -11,7 +11,7 @@
     --bleu: #0055A4;
     --blanc: #FFFFFF;
     --rouge: #EF4135;
-    --ombre: rgba(0,0,0,0.2);
+    --ombre: rgba(0,0,0,0.15);
     --gradient-titre: linear-gradient(90deg, #0055A4, #FFFFFF 50%, #EF4135 50%);
   }
 
@@ -22,144 +22,103 @@
 
   body, html {
     height: 100%;
-    overflow-x: hidden;
     background: linear-gradient(135deg, var(--bleu) 33%, var(--blanc) 33%, var(--blanc) 66%, var(--rouge) 66%);
-    position: relative;
-    color: #222;
+    color: #000; /* texte en noir */
+    overflow-x: hidden;
   }
 
   header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
     background: var(--blanc);
-    height: 70px;
+    box-shadow: 0 3px 10px var(--ombre);
+    padding: 10px 40px 10px 40px;
+  }
+
+  .header-top {
     display: flex;
     align-items: center;
-    padding: 0 30px;
-    box-shadow: 0 3px 10px var(--ombre);
-    z-index: 15;
+    padding: 10px 0 20px 0;
   }
 
   .flag {
-    width: 50px;
-    height: 30px;
-    border-radius: 6px;
+    width: 60px;
+    height: 36px;
+    border-radius: 8px;
     background: linear-gradient(90deg, #0055A4 33%, #FFFFFF 33%, #FFFFFF 66%, #EF4135 66%);
-    margin-right: 15px;
-    animation: float 3s ease-in-out infinite;
+    margin-right: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    animation: float 3s ease-in-out infinite;
   }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50% { transform: translateY(-6px); }
   }
 
-  header h2 {
+  header h1 {
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--bleu);
-    font-size: 1.5rem;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    color: #000;
+    flex-shrink: 0;
   }
 
-  /* TÉMOIGNAGES - BANDEAU DÉFILANT */
-  .testimonials-wrapper {
-    position: fixed;
-    top: 70px; /* juste sous le header */
-    left: 0;
-    width: 100%;
-    background: var(--blanc);
-    box-shadow: 0 3px 10px var(--ombre);
-    height: 50px;
+  /* Témoignages défilants */
+  .testimonial-container {
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    z-index: 14;
+    white-space: nowrap;
+    border-top: 2px solid var(--rouge);
+    border-bottom: 2px solid var(--bleu);
+    padding: 10px 0;
+    margin-top: 10px;
+    position: relative;
   }
 
-  .testimonials {
-    display: flex;
+  .testimonial-slider {
+    display: inline-block;
     white-space: nowrap;
-    animation: scrollLeft 20s linear infinite;
+    animation: slideLeft 20s linear infinite;
   }
 
   .testimonial {
     display: inline-block;
-    padding: 0 50px;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--bleu);
-    position: relative;
-  }
-
-  .testimonial::after {
-    content: " — ";
-    color: var(--rouge);
-    font-weight: 700;
-    margin-left: 10px;
-  }
-
-  .testimonial:last-child::after {
-    content: "";
-    margin-left: 0;
-  }
-
-  /* Animation scroll horizontal */
-  @keyframes scrollLeft {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  /* CONTENU PRINCIPAL */
-  main {
-    padding-top: 130px; /* espace pour header + bandeau témoignages */
-    display: flex;
-    justify-content: center;
-  }
-
-  .container {
-    position: relative;
-    z-index: 5;
-    max-width: 750px;
-    background: var(--blanc);
+    background: var(--bleu);
+    color: var(--blanc);
+    padding: 8px 22px;
+    margin-right: 40px;
     border-radius: 25px;
-    box-shadow: 0 10px 35px var(--ombre);
-    padding: 50px 40px;
-    text-align: center;
-    animation: fadeInUp 1s ease forwards;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.15);
+  }
+
+  @keyframes slideLeft {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  main {
     display: flex;
-    flex-direction: column;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 30px;
     align-items: center;
+    gap: 60px;
   }
 
-  .photo-max {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 8px 25px var(--ombre);
-    margin-bottom: 30px;
-    border: 6px solid var(--bleu);
-    transition: transform 0.3s ease;
+  .text-section {
+    flex: 1;
   }
 
-  .photo-max:hover {
-    transform: scale(1.05) rotate(3deg);
-  }
-
-  h1 {
-    font-size: 3.5rem;
+  .text-section h2 {
+    font-size: 3rem;
+    font-weight: 900;
     background: var(--gradient-titre);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    animation: gradientMove 4s linear infinite;
     letter-spacing: 3px;
     margin-bottom: 25px;
+    animation: gradientMove 4s linear infinite;
   }
 
   @keyframes gradientMove {
@@ -167,30 +126,27 @@
     100% { background-position: 200% 50%; }
   }
 
-  p.intro {
+  .text-section p {
     font-size: 1.25rem;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
     line-height: 1.6;
-    max-width: 650px;
   }
 
   ul {
-    list-style-type: none;
-    text-align: left;
+    list-style: none;
     margin-bottom: 40px;
-    max-width: 500px;
   }
 
   ul li {
-    font-size: 1.15rem;
-    padding: 12px 0 12px 40px;
-    color: var(--bleu);
     font-weight: 600;
+    font-size: 1.15rem;
+    padding-left: 40px;
     position: relative;
+    margin-bottom: 18px;
   }
 
   ul li::before {
-    content: '✔';
+    content: "✔";
     position: absolute;
     left: 10px;
     top: 50%;
@@ -207,216 +163,140 @@
     50% { transform: translateY(-50%) translateY(-5px); }
   }
 
-  .btn-vote, .btn-contact {
+  .btn-vote {
     background: var(--rouge);
     color: var(--blanc);
-    border: none;
-    padding: 15px 50px;
-    font-size: 1.3rem;
     font-weight: 700;
+    font-size: 1.3rem;
+    padding: 16px 55px;
+    border: none;
     border-radius: 50px;
     cursor: pointer;
     box-shadow: 0 7px 20px var(--ombre);
     transition: background 0.3s ease, transform 0.3s ease;
-    margin: 0 10px;
   }
 
-  .btn-vote:hover, .btn-contact:hover {
+  .btn-vote:hover {
     background: var(--bleu);
     transform: scale(1.1);
     box-shadow: 0 10px 30px var(--ombre);
   }
 
-  .btn-container {
-    margin-bottom: 40px;
+  .photo-section {
+    flex: 0 0 380px;
+    max-width: 380px;
+    box-shadow: 0 10px 40px var(--ombre);
+    border-radius: 25px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
   }
 
-  /* MODAL FORMULAIRE */
-  .modal {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 20;
-  }
-
-  .modal.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal-content {
-    background: var(--blanc);
-    border-radius: 20px;
-    padding: 30px 40px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 8px 30px var(--ombre);
-    position: relative;
-    animation: modalIn 0.4s ease forwards;
-  }
-
-  @keyframes modalIn {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .modal-content h3 {
-    margin-bottom: 20px;
-    color: var(--bleu);
-  }
-
-  .modal-content label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-  }
-
-  .modal-content input, .modal-content textarea {
+  .photo-section img {
     width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    border: 1.5px solid #ccc;
-    font-size: 1rem;
-    resize: vertical;
+    height: auto;
+    display: block;
   }
 
-  .modal-content button.close-btn {
-    position: absolute;
-    top: 15px; right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--rouge);
+  .photo-section:hover {
+    transform: scale(1.05) rotate(2deg);
   }
 
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 25px 15px;
-    color: var(--blanc);
-    font-size: 1.1rem;
-    font-weight: 600;
-    background: rgba(0,0,0,0.2);
+  /* Confettis container */
+  #confetti-container {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    z-index: 10;
-  }
-
-  @keyframes fadeInUp {
-    0% {opacity: 0; transform: translateY(40px);}
-    100% {opacity: 1; transform: translateY(0);}
+    pointer-events: none;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: visible;
+    z-index: 9999;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="flag" aria-label="Drapeau Français"></div>
-  <h2>Campagne Électorale</h2>
+  <div class="header-top">
+    <div class="flag" aria-label="Drapeau Français"></div>
+    <h1>Campagne Électorale</h1>
+  </div>
+  <div class="testimonial-container" aria-label="Témoignages des électeurs">
+    <div class="testimonial-slider" role="list">
+      <div class="testimonial" role="listitem">« Max est à l'écoute et toujours disponible ! » – Julie M.</div>
+      <div class="testimonial" role="listitem">« Un candidat sérieux et motivé, parfait pour notre délégation. » – Antoine L.</div>
+      <div class="testimonial" role="listitem">« Grâce à Max, j'ai confiance en l'avenir. » – Sarah P.</div>
+      <div class="testimonial" role="listitem">« Sa détermination est inspirante, votez Max ! » – Karim D.</div>
+      <div class="testimonial" role="listitem">« Max saura nous représenter avec honnêteté. » – Léa T.</div>
+    </div>
+  </div>
 </header>
 
-<div class="testimonials-wrapper" aria-label="Témoignages des élèves">
-  <div class="testimonials" aria-live="polite" aria-atomic="true">
-    <div class="testimonial" tabindex="0">"Grâce à Max DECKMYN, nos idées sont enfin entendues !" – Camille</div>
-    <div class="testimonial" tabindex="0">"Un vrai délégué à l’écoute, toujours prêt à agir." – Lucas</div>
-    <div class="testimonial" tabindex="0">"L’ambiance en classe s’est nettement améliorée cette année." – Amina</div>
-
-    <!-- On répète les témoignages pour boucle fluide -->
-    <div class="testimonial" tabindex="0">"Grâce à Max DECKMYN, nos idées sont enfin entendues !" – Camille</div>
-    <div class="testimonial" tabindex="0">"Un vrai délégué à l’écoute, toujours prêt à agir." – Lucas</div>
-    <div class="testimonial" tabindex="0">"L’ambiance en classe s’est nettement améliorée cette année." – Amina</div>
-  </div>
-</div>
-
 <main>
-  <div class="container" role="main" aria-labelledby="main-title">
-    <img src="max_deckmyn.jpg" alt="Photo de Max DECKMYN" class="photo-max" />
-    <h1 id="main-title">Votez Max DECKMYN !</h1>
-    <p class="intro">Je suis prêt à être votre délégué et à défendre vos idées avec énergie et sérieux. Ensemble, faisons de cette année une réussite et améliorons notre quotidien !</p>
-
-    <ul aria-label="Propositions de campagne">
+  <section class="text-section" role="main" aria-labelledby="title-max">
+    <h2 id="title-max">Votez Max DECKMYN !</h2>
+    <p>Je suis prêt à être votre délégué et à défendre vos idées avec énergie et sérieux. Ensemble, faisons de cette année une réussite et améliorons notre quotidien !</p>
+    <ul>
       <li>Être à votre écoute</li>
       <li>Agir concrètement</li>
       <li>Favoriser la bonne entente</li>
       <li>Être transparent avec vous</li>
     </ul>
+    <button class="btn-vote" id="voteBtn">Je vote pour Max DECKMYN</button>
+  </section>
 
-    <div class="btn-container">
-      <button class="btn-vote" id="voteBtn">Je vote pour Max DECKMYN</button>
-      <button class="btn-contact" id="contactBtn">Contacte-moi</button>
-    </div>
-  </div>
+  <section class="photo-section" aria-label="Photo de Max DECKMYN">
+    <img src="max_deckmyn.jpg" alt="Photo de Max DECKMYN" />
+  </section>
 </main>
 
-<footer>
-  Ensemble, construisons un avenir plus juste et solidaire !
-</footer>
-
-<!-- MODAL -->
-<div class="modal" id="modalContact" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-  <div class="modal-content">
-    <button class="close-btn" id="closeModal" aria-label="Fermer la fenêtre">×</button>
-    <h3 id="modalTitle">Contactez Max DECKMYN</h3>
-    <p id="modalDesc">Laissez-moi un message, je vous répondrai rapidement !</p>
-    <form id="contactForm">
-      <label for="name">Nom :</label>
-      <input type="text" id="name" name="name" required />
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required />
-      <label for="message">Message :</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
-      <button type="submit" class="btn-vote">Envoyer</button>
-    </form>
-  </div>
-</div>
+<div id="confetti-container"></div>
 
 <script>
-  // Modal Contact
-  const modal = document.getElementById('modalContact');
-  const contactBtn = document.getElementById('contactBtn');
-  const closeModalBtn = document.getElementById('closeModal');
+  // Confettis simples
+  const confettiContainer = document.getElementById('confetti-container');
+  const colors = ['#EF4135', '#0055A4', '#FFFFFF'];
 
-  contactBtn.addEventListener('click', () => {
-    modal.classList.add('active');
-  });
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.style.position = 'absolute';
+    confetti.style.width = Math.random() * 8 + 7 + 'px';
+    confetti.style.height = confetti.style.width;
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.top = '-10px';
+    confetti.style.opacity = Math.random() + 0.5;
+    confetti.style.borderRadius = '3px';
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    confetti.style.pointerEvents = 'none';
+    confettiContainer.appendChild(confetti);
 
-  closeModalBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-  });
+    let fallingDuration = 3000 + Math.random() * 2000; // 3-5 sec
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
+    let start = null;
+    let initialX = parseFloat(confetti.style.left);
+
+    function animate(timestamp) {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+
+      confetti.style.top = (progress / fallingDuration) * window.innerHeight + 'px';
+      confetti.style.left = initialX + Math.sin(progress / 200) * 20 + 'px'; // léger oscillation horizontale
+
+      if (progress < fallingDuration) {
+        requestAnimationFrame(animate);
+      } else {
+        confetti.remove();
+      }
     }
-  });
 
-  // Soumission du formulaire
-  const contactForm = document.getElementById('contactForm');
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Merci pour votre message, Max DECKMYN vous répondra rapidement !');
-    contactForm.reset();
-    modal.classList.remove('active');
-  });
+    requestAnimationFrame(animate);
+  }
 
-  // Gestion du bouton vote
-  const voteBtn = document.getElementById('voteBtn');
-  voteBtn.addEventListener('click', () => {
+  document.getElementById('voteBtn').addEventListener('click', () => {
+    // Lance 30 confettis d'un coup
+    for(let i = 0; i < 30; i++) {
+      setTimeout(createConfetti, i * 50);
+    }
     alert('Merci pour votre soutien à Max DECKMYN !');
   });
 </script>
