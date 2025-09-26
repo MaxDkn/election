@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Campagne Électorale - Vote Max DECKMYN</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+  :root {
+    --bleu: #0055A4;
+    --blanc: #FFFFFF;
+    --rouge: #EF4135;
+    --ombre: rgba(0,0,0,0.2);
+    --gradient-titre: linear-gradient(90deg, #0055A4, #FFFFFF 50%, #EF4135 50%);
+  }
+
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body, html {
+    height: 100%;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, var(--bleu) 33%, var(--blanc) 33%, var(--blanc) 66%, var(--rouge) 66%);
+    position: relative;
+    color: #222;
+  }
+
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--blanc);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 3px 10px var(--ombre);
+    z-index: 15;
+  }
+
+  .flag {
+    width: 50px;
+    height: 30px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #0055A4 33%, #FFFFFF 33%, #FFFFFF 66%, #EF4135 66%);
+    margin-right: 15px;
+    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  header h2 {
+    font-weight: 700;
+    color: var(--bleu);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  /* TÉMOIGNAGES - BANDEAU DÉFILANT */
+  .testimonials-wrapper {
+    position: fixed;
+    top: 70px; /* juste sous le header */
+    left: 0;
+    width: 100%;
+    background: var(--blanc);
+    box-shadow: 0 3px 10px var(--ombre);
+    height: 50px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    z-index: 14;
+  }
+
+  .testimonials {
+    display: flex;
+    white-space: nowrap;
+    animation: scrollLeft 20s linear infinite;
+  }
+
+  .testimonial {
+    display: inline-block;
+    padding: 0 50px;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--bleu);
+    position: relative;
+  }
+
+  .testimonial::after {
+    content: " — ";
+    color: var(--rouge);
+    font-weight: 700;
+    margin-left: 10px;
+  }
+
+  .testimonial:last-child::after {
+    content: "";
+    margin-left: 0;
+  }
+
+  /* Animation scroll horizontal */
+  @keyframes scrollLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* CONTENU PRINCIPAL */
+  main {
+    padding-top: 130px; /* espace pour header + bandeau témoignages */
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    position: relative;
+    z-index: 5;
+    max-width: 750px;
+    background: var(--blanc);
+    border-radius: 25px;
+    box-shadow: 0 10px 35px var(--ombre);
+    padding: 50px 40px;
+    text-align: center;
+    animation: fadeInUp 1s ease forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .photo-max {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 25px var(--ombre);
+    margin-bottom: 30px;
+    border: 6px solid var(--bleu);
+    transition: transform 0.3s ease;
+  }
+
+  .photo-max:hover {
+    transform: scale(1.05) rotate(3deg);
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    background: var(--gradient-titre);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradientMove 4s linear infinite;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  p.intro {
+    font-size: 1.25rem;
+    margin-bottom: 35px;
+    line-height: 1.6;
+    max-width: 650px;
+  }
+
+  ul {
+    list-style-type: none;
+    text-align: left;
+    margin-bottom: 40px;
+    max-width: 500px;
+  }
+
+  ul li {
+    font-size: 1.15rem;
+    padding: 12px 0 12px 40px;
+    color: var(--bleu);
+    font-weight: 600;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '✔';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--rouge);
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-shadow: 1px 1px var(--bleu);
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(-50%) translateY(0); }
+    50% { transform: translateY(-50%) translateY(-5px); }
+  }
+
+  .btn-vote, .btn-contact {
+    background: var(--rouge);
+    color: var(--blanc);
+    border: none;
+    padding: 15px 50px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 7px 20px var(--ombre);
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin: 0 10px;
+  }
+
+  .btn-vote:hover, .btn-contact:hover {
+    background: var(--bleu);
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px var(--ombre);
+  }
+
+  .btn-container {
+    margin-bottom: 40px;
+  }
+
+  /* MODAL FORMULAIRE */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+  }
+
+  .modal.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-content {
+    background: var(--blanc);
+    border-radius: 20px;
+    padding: 30px 40px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 8px 30px var(--ombre);
+    position: relative;
+    animation: modalIn 0.4s ease forwards;
+  }
+
+  @keyframes modalIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .modal-content h3 {
+    margin-bottom: 20px;
+    color: var(--bleu);
+  }
+
+  .modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .modal-content input, .modal-content textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1.5px solid #ccc;
+    font-size: 1rem;
+    resize: vertical;
+  }
+
+  .modal-content button.close-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--rouge);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 25px 15px;
+    color: var(--blanc);
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: rgba(0,0,0,0.2);
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 10;
+  }
+
+  @keyframes fadeInUp {
+    0% {opacity: 0; transform: translateY(40px);}
+    100% {opacity: 1; transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="flag" aria-label="Drapeau Français"></div>
+  <h2>Campagne Électorale</h2>
+</header>
+
+<div class="testimonials-wrapper" aria-label="Témoignages des élèves">
+  <div class="testimonials" aria-live="polite" aria-atomic="true">
+    <div class="testimonial" tabindex="0">"Grâce à Max DECKMYN, nos idées sont enfin entendues !" – Camille</div>
+    <div class="testimonial" tabindex="0">"Un vrai délégué à l’écoute, toujours prêt à agir." – Lucas</div>
+    <div class="testimonial" tabindex="0">"L’ambiance en classe s’est nettement améliorée cette année." – Amina</div>
+
+    <!-- On répète les témoignages pour boucle fluide -->
+    <div class="testimonial" tabindex="0">"Grâce à Max DECKMYN, nos idées sont enfin entendues !" – Camille</div>
+    <div class="testimonial" tabindex="0">"Un vrai délégué à l’écoute, toujours prêt à agir." – Lucas</div>
+    <div class="testimonial" tabindex="0">"L’ambiance en classe s’est nettement améliorée cette année." – Amina</div>
+  </div>
+</div>
+
+<main>
+  <div class="container" role="main" aria-labelledby="main-title">
+    <img src="max_deckmyn.jpg" alt="Photo de Max DECKMYN" class="photo-max" />
+    <h1 id="main-title">Votez Max DECKMYN !</h1>
+    <p class="intro">Je suis prêt à être votre délégué et à défendre vos idées avec énergie et sérieux. Ensemble, faisons de cette année une réussite et améliorons notre quotidien !</p>
+
+    <ul aria-label="Propositions de campagne">
+      <li>Être à votre écoute</li>
+      <li>Agir concrètement</li>
+      <li>Favoriser la bonne entente</li>
+      <li>Être transparent avec vous</li>
+    </ul>
+
+    <div class="btn-container">
+      <button class="btn-vote" id="voteBtn">Je vote pour Max DECKMYN</button>
+      <button class="btn-contact" id="contactBtn">Contacte-moi</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Ensemble, construisons un avenir plus juste et solidaire !
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modalContact" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div class="modal-content">
+    <button class="close-btn" id="closeModal" aria-label="Fermer la fenêtre">×</button>
+    <h3 id="modalTitle">Contactez Max DECKMYN</h3>
+    <p id="modalDesc">Laissez-moi un message, je vous répondrai rapidement !</p>
+    <form id="contactForm">
+      <label for="name">Nom :</label>
+      <input type="text" id="name" name="name" required />
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required />
+      <label for="message">Message :</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+      <button type="submit" class="btn-vote">Envoyer</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Modal Contact
+  const modal = document.getElementById('modalContact');
+  const contactBtn = document.getElementById('contactBtn');
+  const closeModalBtn = document.getElementById('closeModal');
+
+  contactBtn.addEventListener('click', () => {
+    modal.classList.add('active');
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+
+  // Soumission du formulaire
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Merci pour votre message, Max DECKMYN vous répondra rapidement !');
+    contactForm.reset();
+    modal.classList.remove('active');
+  });
+
+  // Gestion du bouton vote
+  const voteBtn = document.getElementById('voteBtn');
+  voteBtn.addEventListener('click', () => {
+    alert('Merci pour votre soutien à Max DECKMYN !');
+  });
+</script>
+
+</body>
+</html>
