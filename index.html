@@ -20,15 +20,7 @@
     --ombre-forte: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: 'Inter', sans-serif;
@@ -38,40 +30,55 @@
     overflow-x: hidden;
   }
 
-  /* Header */
+  /* Header avec sliders */
   header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--ombre);
+    background: var(--gris-fonce);
+    color: var(--blanc);
     position: sticky;
     top: 0;
     z-index: 100;
+    overflow: hidden;
     padding: 1rem 0;
   }
 
-  .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
+  .testimonials-container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: hidden;
   }
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--bleu);
-    text-decoration: none;
+  .testimonials-slider {
+    display: inline-flex;
+    white-space: nowrap;
+    will-change: transform;
   }
 
-  .nav {
-    font-size: 0.9rem;
+  .slider1 { animation: scroll 20s linear infinite; }
+  .slider2 { animation: scroll 30s linear infinite reverse; }
+
+  @keyframes scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .header-testimonial {
+    flex-shrink: 0;
+    padding: 0 2rem;
+    font-style: italic;
+    font-size: 1rem;
     font-weight: 500;
-    color: var(--gris);
+    opacity: 0.9;
   }
 
-  /* Hero Section - Photo en premier */
+  .testimonial-author {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--bleu-clair);
+    margin-left: 1rem;
+  }
+
+  /* Hero Section */
   .hero {
     position: relative;
     height: 100vh;
@@ -79,8 +86,8 @@
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--blanc) 0%, var(--gris-clair) 100%);
+    margin-top: 2rem;
   }
-
   .hero-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -91,307 +98,87 @@
     align-items: center;
     height: 100%;
   }
-
-  .hero-content {
-    opacity: 0;
-    transform: translateX(-50px);
-    transition: all 1s ease 0.8s;
-  }
-
-  .hero.loaded .hero-content {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
-    color: var(--gris-fonce);
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-  }
-
-  .hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--gris);
-    margin-bottom: 2rem;
-    font-weight: 400;
-  }
-
+  .hero-content { opacity: 0; transform: translateX(-50px); transition: all 1s ease 0.8s; }
+  .hero.loaded .hero-content { opacity: 1; transform: translateX(0); }
+  .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--gris-fonce); margin-bottom: 1.5rem; line-height: 1.1; }
+  .hero-subtitle { font-size: 1.25rem; color: var(--gris); margin-bottom: 3rem; font-weight: 400; }
   .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--bleu);
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: var(--ombre);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--bleu); color: white; padding: 1rem 2rem;
+    border: none; border-radius: 50px; font-size: 1.1rem;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: all 0.3s ease; box-shadow: var(--ombre);
   }
+  .hero-cta:hover { background: var(--bleu-clair); transform: translateY(-2px); box-shadow: var(--ombre-forte); }
 
-  .hero-cta:hover {
-    background: var(--bleu-clair);
-    transform: translateY(-2px);
-    box-shadow: var(--ombre-forte);
-  }
+  /* Carousel */
+  .hero-photos { display: flex; justify-content: center; align-items: center; opacity: 0; transform: scale(0.8); transition: all 1s ease 0.3s; position: relative; }
+  .hero.loaded .hero-photos { opacity: 1; transform: scale(1); }
+  .carousel-container { position: relative; width: 450px; height: 550px; overflow: hidden; border-radius: 25px; box-shadow: var(--ombre-forte); }
+  .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); height: 100%; }
+  .carousel-slide { min-width: 100%; position: relative; overflow: hidden; }
+  .carousel-slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+  .carousel-slide:hover img { transform: scale(1.05); }
+  .photo-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 3rem 2rem 2rem; text-align: center; }
+  .photo-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .photo-title { font-size: 1.1rem; opacity: 0.9; font-weight: 500; }
+  .carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.9); border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--gris-fonce); transition: all 0.3s ease; box-shadow: var(--ombre); }
+  .carousel-nav:hover { background: white; transform: translateY(-50%) scale(1.1); }
+  .carousel-prev { left: -25px; }
+  .carousel-next { right: -25px; }
+  .carousel-indicators { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+  .indicator { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer; transition: all 0.3s ease; }
+  .indicator.active { background: white; transform: scale(1.2); }
 
-  /* Photo Section */
-  .hero-photo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: all 1s ease 0.3s;
-  }
+  /* CTA Section */
+  .cta-section { background: var(--gris-fonce); color: var(--blanc); text-align: center; padding: 6rem 2rem; position: relative; overflow: hidden; margin-top: 4rem; }
+  .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, var(--bleu) 0%, var(--gris-fonce) 50%, var(--rouge) 100%); opacity: 0.1; }
+  .cta-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .cta-content.visible { opacity: 1; transform: translateY(0); }
+  .cta-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1.5rem; background: linear-gradient(45deg, var(--blanc), var(--bleu-clair)); -webkit-background-clip: text; color: transparent; }
+  .cta-subtitle { font-size: 1.4rem; margin-bottom: 3rem; opacity: 0.9; line-height: 1.5; }
+  .btn-vote-main { background: linear-gradient(45deg, var(--rouge), var(--rouge-clair)); color: white; padding: 1.5rem 4rem; border: none; border-radius: 50px; font-size: 1.4rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--ombre-forte); position: relative; overflow: hidden; }
+  .btn-vote-main::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s; }
+  .btn-vote-main:hover::before { left: 100%; }
+  .btn-vote-main:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 25px 50px rgba(220, 38, 38, 0.4); }
 
-  .hero.loaded .hero-photo {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .photo-container {
-    width: 400px;
-    height: 500px;
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: var(--ombre-forte);
-    transition: transform 0.3s ease;
-  }
-
-  .photo-container:hover {
-    transform: scale(1.02);
-  }
-
-  .photo-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .photo-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.7));
-    color: white;
-    padding: 2rem 1.5rem 1.5rem;
-    text-align: center;
-  }
-
-  .photo-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .photo-title {
-    font-size: 1rem;
-    opacity: 0.9;
-  }
-
-  /* Testimonials */
-  .testimonials {
-    background: var(--blanc);
-    padding: 2rem 0;
-    overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-  }
-
-  .testimonials-track {
-    display: flex;
-    animation: scroll 10s linear infinite;
-    gap: 2rem;
-  }
-
-  .testimonial {
-    flex-shrink: 0;
-    background: var(--gris-clair);
-    padding: 1.5rem 2rem;
-    border-radius: 15px;
-    min-width: 350px;
-    box-shadow: var(--ombre);
-    font-style: italic;
-    color: var(--gris-fonce);
-    font-weight: 500;
-  }
-
-  .testimonial-author {
-    margin-top: 1rem;
-    font-style: normal;
-    font-weight: 600;
-    color: var(--bleu);
-    text-align: right;
-  }
-
-  @keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* Main Content */
-  .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-  }
-
-  .content-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
-    margin-bottom: 4rem;
-  }
-
-  .content-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--gris-fonce);
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-
-  .promises-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .promise-card {
-    background: var(--blanc);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--ombre);
-    transition: transform 0.3s ease;
-    border-left: 4px solid var(--bleu);
-  }
-
-  .promise-card:hover {
-    transform: translateY(-5px);
-  }
-
-  .promise-icon {
-    width: 50px;
-    height: 50px;
-    background: var(--bleu);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  .promise-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--gris-fonce);
-  }
-
-  .promise-description {
-    color: var(--gris);
-    font-size: 0.95rem;
-  }
-
-  .final-cta {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: var(--gris-fonce);
-    color: var(--blanc);
-  }
-
-  .final-cta h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .final-cta p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-  }
-
-  .btn-vote-final {
-    background: var(--rouge);
-    color: white;
-    padding: 1.25rem 3rem;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.25rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: var(--ombre);
-  }
-
-  .btn-vote-final:hover {
-    background: var(--rouge-clair);
-    transform: scale(1.05);
-  }
+  /* Programme */
+  .program-section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+  .program-content { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .program-content.visible { opacity: 1; transform: translateY(0); }
+  .section-title { font-size: 2.5rem; font-weight: 700; color: var(--gris-fonce); margin-bottom: 3rem; text-align: center; }
+  .promises-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+  .promise-card { background: var(--blanc); padding: 2.5rem; border-radius: 20px; box-shadow: var(--ombre); transition: all 0.3s ease; border-left: 5px solid var(--bleu); position: relative; overflow: hidden; }
+  .promise-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(45deg, var(--bleu), var(--bleu-clair)); }
+  .promise-card:hover { transform: translateY(-8px); box-shadow: var(--ombre-forte); }
+  .promise-icon { width: 60px; height: 60px; background: linear-gradient(45deg, var(--bleu), var(--bleu-clair)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.8rem; color: white; }
+  .promise-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; color: var(--gris-fonce); }
+  .promise-description { color: var(--gris); font-size: 1rem; line-height: 1.6; }
 
   /* Responsive */
   @media (max-width: 768px) {
-    .hero-container {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      text-align: center;
-    }
-
-    .hero-photo {
-      order: -1;
-    }
-
-    .photo-container {
-      width: 300px;
-      height: 375px;
-    }
-
-    .hero-title {
-      font-size: 2.5rem;
-    }
-
-    .testimonial {
-      min-width: 280px;
-    }
-
-    .promises-grid {
-      grid-template-columns: 1fr;
-    }
+    .hero-container { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+    .hero-photos { order: -1; }
+    .carousel-container { width: 350px; height: 450px; }
+    .carousel-nav { display: none; }
+    .promises-grid { grid-template-columns: 1fr; }
+    .cta-title { font-size: 2.5rem; }
+    .btn-vote-main { padding: 1.25rem 3rem; font-size: 1.2rem; }
+  }
+  @media (max-width: 480px) {
+    .carousel-container { width: 300px; height: 400px; }
   }
 
-  /* Confettis subtils */
-  #confetti-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 9999;
-  }
+  /* Confettis */
+  #confetti-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-container">
-    <a href="#" class="logo">Max DECKMYN</a>
-    <div class="nav">Candidat Délégué 2024</div>
+  <div class="testimonials-container">
+    <div class="testimonials-slider slider1"></div>
+    <div class="testimonials-slider slider2"></div>
   </div>
 </header>
 
@@ -399,203 +186,143 @@
   <div class="hero-container">
     <div class="hero-content">
       <h1 class="hero-title">Votez Max DECKMYN</h1>
-      <p class="hero-subtitle">
-        Votre futur délégué, prêt à défendre vos idées avec énergie et sérieux. 
-        Ensemble, faisons de cette année une réussite !
-      </p>
-      <a href="#content" class="hero-cta">
-        Découvrir mon programme
-        <span>→</span>
-      </a>
+      <p class="hero-subtitle">Votre futur délégué, prêt à défendre vos idées avec énergie et sérieux. Ensemble, faisons de cette année une réussite !</p>
+      <a href="#vote" class="hero-cta">Découvrir mon engagement <span>→</span></a>
     </div>
-    
-    <div class="hero-photo">
-      <div class="photo-container">
-        <img src="max_deckmyn.jpg" alt="Max DECKMYN" />
-        <div class="photo-overlay">
-          <div class="photo-name">Max DECKMYN</div>
-          <div class="photo-title">Candidat Délégué</div>
+    <div class="hero-photos">
+      <div class="carousel-container">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <img src="max_deckmyn.jpg" alt="Max DECKMYN" />
+            <div class="photo-overlay"><div class="photo-name">Max DECKMYN</div><div class="photo-title">Candidat Délégué</div></div>
+          </div>
+          <div class="carousel-slide">
+            <img src="max_deckmyn.jpg" alt="Max DECKMYN en action" />
+            <div class="photo-overlay"><div class="photo-name">Max DECKMYN</div><div class="photo-title">À votre service</div></div>
+          </div>
+          <div class="carousel-slide">
+            <img src="max_deckmyn.jpg" alt="Max DECKMYN déterminé" />
+            <div class="photo-overlay"><div class="photo-name">Max DECKMYN</div><div class="photo-title">Prêt pour l'action</div></div>
+          </div>
+        </div>
+        <button class="carousel-nav carousel-prev" id="prevBtn">‹</button>
+        <button class="carousel-nav carousel-next" id="nextBtn">›</button>
+        <div class="carousel-indicators">
+          <div class="indicator active" data-slide="0"></div>
+          <div class="indicator" data-slide="1"></div>
+          <div class="indicator" data-slide="2"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="testimonials">
-  <div class="testimonials-track">
-    <div class="testimonial">
-      « Max est un élève remarquable, je lui remercie d'avoir été mon élève ! »
-    <div class="testimonial-author">– Helena B.</div>    
-    <div class="testimonial">
-      « Max est à l'écoute et toujours disponible ! »
-      <div class="testimonial-author">– Luka M.</div>
-    </div>
-    <div class="testimonial">
-      « Un candidat sérieux et motivé, parfait pour notre délégation. »
-      <div class="testimonial-author">– Antoine L.</div>
-    </div>
-    <div class="testimonial">
-      « Grâce à Max, j'ai confiance en l'avenir. »
-      <div class="testimonial-author">– Sarah P.</div>
-    </div>
-    <div class="testimonial">
-      « Sa détermination est inspirante, votez Max ! »
-      <div class="testimonial-author">– Karim D.</div>
-    </div>
-    <div class="testimonial">
-      « Max saura nous représenter avec honnêteté. »
-      <div class="testimonial-author">– Léa T.</div>
-    </div>
-    <div class="testimonial">
-      « Un leader naturel qui sait rassembler. »
-      <div class="testimonial-author">– Thomas R.</div>
-    </div>
-    <div class="testimonial">
-      « Max comprend vraiment nos préoccupations. »
-      <div class="testimonial-author">– Emma B.</div>
-    </div>
-    <div class="testimonial">
-      « Enfin un candidat qui tient ses promesses ! »
-    <div class="testimonial-author">– Alexandre V.</div>
-    </div>
+<section class="cta-section" id="vote">
+  <div class="cta-content">
+    <h2 class="cta-title">Prêt à faire la différence ?</h2>
+    <p class="cta-subtitle">Votre vote peut changer les choses. Ensemble, construisons un avenir meilleur et créons une communauté plus unie et plus forte.</p>
+    <button class="btn-vote-main" id="mainVoteBtn">Je vote pour Max DECKMYN</button>
   </div>
 </section>
 
-<main class="main-content" id="content">
-  <section class="content-section">
+<section class="program-section" id="program">
+  <div class="program-content">
     <h2 class="section-title">Mes Engagements</h2>
     <div class="promises-grid">
-      <div class="promise-card">
-        <div class="promise-icon">👂</div>
-        <h3 class="promise-title">Être à votre écoute</h3>
-        <p class="promise-description">
-          Une communication ouverte et transparente pour que chaque voix soit entendue et prise en compte dans nos décisions.
-        </p>
-      </div>
-      
-      <div class="promise-card">
-        <div class="promise-icon">⚡</div>
-        <h3 class="promise-title">Agir concrètement</h3>
-        <p class="promise-description">
-          Des actions rapides et efficaces pour améliorer votre quotidien, avec des résultats mesurables et visibles.
-        </p>
-      </div>
-      
-      <div class="promise-card">
-        <div class="promise-icon">🤝</div>
-        <h3 class="promise-title">Favoriser la bonne entente</h3>
-        <p class="promise-description">
-          Créer un environnement de travail harmonieux où chacun se sent respecté et valorisé dans ses contributions.
-        </p>
-      </div>
-      
-      <div class="promise-card">
-        <div class="promise-icon">💎</div>
-        <h3 class="promise-title">Être transparent avec vous</h3>
-        <p class="promise-description">
-          Une information claire et régulière sur toutes les décisions prises, pour une confiance mutuelle durable.
-        </p>
-      </div>
+      <div class="promise-card"><div class="promise-icon">👂</div><h3 class="promise-title">Être à votre écoute</h3><p class="promise-description">Une communication ouverte et transparente pour que chaque voix soit entendue et prise en compte dans nos décisions. Des consultations régulières pour rester connecté à vos besoins.</p></div>
+      <div class="promise-card"><div class="promise-icon">🤝</div><h3 class="promise-title">Favoriser la bonne entente</h3><p class="promise-description">Créer un environnement harmonieux où chacun se sent respecté et valorisé. Rassembler plutôt que diviser, pour une communauté plus forte.</p></div>
+      <div class="promise-card"><div class="promise-icon">💎</div><h3 class="promise-title">Être transparent avec vous</h3><p class="promise-description">Une information claire et régulière sur toutes les décisions prises. Comptes-rendus détaillés et accessibilité totale pour une confiance mutuelle.</p></div>
     </div>
-  </section>
-</main>
-
-<section class="final-cta">
-  <h2>Prêt à faire la différence ?</h2>
-  <p>Votre vote peut changer les choses. Ensemble, construisons un avenir meilleur.</p>
-  <button class="btn-vote-final" id="finalVoteBtn">
-    Je vote pour Max DECKMYN
-  </button>
+  </div>
 </section>
 
 <div id="confetti-container"></div>
 
 <script>
-  // Animation au chargement
-  window.addEventListener('load', function() {
-    setTimeout(() => {
-      document.getElementById('hero').classList.add('loaded');
-    }, 300);
-  });
+  // Citations
+  const citations = [
+    { text: "« Enfin un candidat qui tient ses promesses ! »", author: "– Pierre Marie Briec." },
+    { text: "« Un candidat sérieux et motivé, parfait pour notre délégation (il a eu 17). »", author: "– Helena Blondel." },
+    { text: "« Grâce à Max, j'ai confiance en l'avenir. »", author: "– Luka H." },
+    { text: "« Sa détermination est inspirante, votez Max ! »", author: "– Alice Domnesque." },
+    { text: "« Un leader naturel qui sait rassembler. »", author: "– Paloma B." },
+    { text: "« Jade est conquise : Max est vraiment à l’écoute de tous ! »", author: "– Jade Fédina" },
+    { text: "« Max saura nous représenter avec sérieux et dynamisme. »", author: "– Valérie Buffet" },
+    { text: "« M. Chagny apprécie sa rigueur et son engagement. »", author: "– M Chagny" }
+  ];
 
-  // Animation au scroll
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
+  function shuffleArray(arr) {
+    let a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+  function initSliders() {
+    document.querySelectorAll('.testimonials-slider').forEach(slider => {
+      slider.innerHTML = '';
+      const shuffled = shuffleArray(citations);
+      shuffled.forEach(c => {
+        slider.innerHTML += `<div class="header-testimonial">${c.text} <span class="testimonial-author">${c.author}</span></div>`;
+      });
+      // Duplication pour un défilement infini
+      shuffled.forEach(c => {
+        slider.innerHTML += `<div class="header-testimonial">${c.text} <span class="testimonial-author">${c.author}</span></div>`;
+      });
     });
-  }, observerOptions);
+  }
 
-  document.querySelectorAll('.content-section').forEach(section => {
-    observer.observe(section);
-  });
+  initSliders();
 
-  // Confettis subtils
-  const confettiContainer = document.getElementById('confetti-container');
-  const colors = ['#2563eb', '#dc2626', '#10b981'];
+  // Carousel
+  const track = document.getElementById("carouselTrack");
+  const slides = document.querySelectorAll(".carousel-slide");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const indicators = document.querySelectorAll(".indicator");
+  let currentIndex = 0;
 
+  function updateCarousel(index) {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    indicators.forEach((ind, i) => ind.classList.toggle("active", i === index));
+    currentIndex = index;
+  }
+  prevBtn.addEventListener("click", () => updateCarousel((currentIndex - 1 + slides.length) % slides.length));
+  nextBtn.addEventListener("click", () => updateCarousel((currentIndex + 1) % slides.length));
+  indicators.forEach((ind, i) => ind.addEventListener("click", () => updateCarousel(i)));
+  setInterval(() => updateCarousel((currentIndex + 1) % slides.length), 5000);
+
+  // Hero et CTA animations
+  window.addEventListener("load", () => document.querySelector(".hero").classList.add("loaded"));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold: 0.2 });
+  document.querySelectorAll(".cta-content, .program-content").forEach(el => observer.observe(el));
+
+  // Confettis
   function createConfetti() {
-    const confetti = document.createElement('div');
-    confetti.style.position = 'absolute';
-    confetti.style.width = Math.random() * 6 + 4 + 'px';
-    confetti.style.height = confetti.style.width;
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.left = Math.random() * window.innerWidth + 'px';
-    confetti.style.top = '-10px';
-    confetti.style.opacity = Math.random() * 0.5 + 0.3;
-    confetti.style.borderRadius = '50%';
-    confetti.style.pointerEvents = 'none';
-    confettiContainer.appendChild(confetti);
+    const confetti = document.createElement("div");
+    confetti.style.position = "absolute";
+    confetti.style.width = "10px";
+    confetti.style.height = "10px";
+    confetti.style.background = `hsl(${Math.random() * 360}, 70%, 50%)`;
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.top = "-10px";
+    confetti.style.opacity = Math.random();
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.getElementById("confetti-container").appendChild(confetti);
 
-    let duration = 4000 + Math.random() * 2000;
-    let start = null;
+    const fall = confetti.animate([
+      { transform: `translateY(0px) rotate(0deg)`, opacity: 1 },
+      { transform: `translateY(${window.innerHeight + 20}px) rotate(720deg)`, opacity: 0 }
+    ], { duration: Math.random() * 3000 + 2000, easing: "linear" });
 
-    function animate(timestamp) {
-      if (!start) start = timestamp;
-      const progress = timestamp - start;
-
-      confetti.style.top = (progress / duration) * window.innerHeight + 'px';
-      confetti.style.transform = `rotate(${progress / 10}deg)`;
-
-      if (progress < duration) {
-        requestAnimationFrame(animate);
-      } else {
-        confetti.remove();
-      }
-    }
-
-    requestAnimationFrame(animate);
+    fall.onfinish = () => confetti.remove();
   }
-
-  function launchConfetti() {
-    for (let i = 0; i < 20; i++) {
-      setTimeout(createConfetti, i * 100);
-    }
-  }
-
-  document.getElementById('finalVoteBtn').addEventListener('click', function() {
-    launchConfetti();
-    alert('Merci pour votre soutien à Max DECKMYN ! 🗳️');
-  });
-
-  // Smooth scroll pour les liens internes
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
+  document.getElementById("mainVoteBtn").addEventListener("click", () => {
+    for (let i = 0; i < 150; i++) setTimeout(createConfetti, i * 15);
   });
 </script>
 
