@@ -27,12 +27,12 @@ export default function Home() {
       caption: "Prêt pour l'action.",
     },
     { 
-      src: "/images/marin.jpg", 
-      caption: "Toujours en mouvement.",
-    },
-    { 
       src: "/images/inoxtag.jpg", 
       caption: "Détermination.", 
+    },
+    { 
+      src: "/images/marin.jpg", 
+      caption: "Toujours en mouvement.",
     },
   ];
 

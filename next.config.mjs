@@ -4,9 +4,9 @@ const repoName = "election";
 
 const nextConfig = {
   reactStrictMode: true,
-  output: "export",
-  basePath: isProd ? `/${repoName}` : "", 
-  assetPrefix: isProd ? `/${repoName}/` : "",
+  output: 'export',         
+  basePath: '/election',    
+  assetPrefix: '/election/',
 };
 
 export default nextConfig;
