@@ -1,0 +1,30 @@
+{
+  "name": "election",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "postbuild": "node -e \"require('fs').closeSync(require('fs').openSync('out/.nojekyll', 'w'))\"",
+    "deploy": "npm run build && npm run postbuild && gh-pages -d out -b prod --dotfiles",
+    "start": "next start"
+  },
+  "homepage": "https://maxdkn.github.io/election",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.23.22",
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-confetti": "^6.4.0",
+    "react-dom": "19.1.0",
+    "react-fast-marquee": "^1.6.5",
+    "react-icons": "^5.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "gh-pages": "^6.3.0",
+    "tailwindcss": "^4"
+  }
+}
